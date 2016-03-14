@@ -1,0 +1,8 @@
+function wconf() { curl http://birdseye.yden.us/birdseye.json | gunzip | jq "." }
+function cconf() { curl http://birdseye.yden.us/birdseye.json | gunzip | jq ".customers.${1}" }
+function dconf() { curl http://birdseye.yden.us/birdseye.json | gunzip | jq ".customers.${1}" | jq ".awsRds" }
+function vconf() { curl http://birdseye.yden.us/birdseye.json | gunzip | jq ". | { version: .version, generated: .generated }" }
+
+function wdc() {
+	open "https://github.com/Widen/dam-config/tree/master/clients/${1[0,1]}/${1}.properties"
+}

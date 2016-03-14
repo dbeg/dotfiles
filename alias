@@ -1,0 +1,6 @@
+alias devw='cd $HOME/dev'
+alias clogs='cd $HOME/dev/widentest-get-logs'
+alias rdep='./gradlew idea --refresh-dependencies'
+alias dockergw='docker-machine restart gray-wolf && docker-machine env gray-wolf && eval "$(docker-machine env gray-wolf)"'
+alias dockerrm='docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'
+alias gwrm='rm -r node_modules/ && rm .last-npm-update && make test'

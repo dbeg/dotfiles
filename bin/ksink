@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ip=$(dig +short $1.int.yden.us | tail -n1)
+echo $1 ' -> ' $ip
+outdir=~/dev/rt/$1
+mkdir -p $outdir
+scp -i ~/.ssh/yden.prd.pem ec2-user@$ip:/mnt/data/collective/containers/$1/clogs/kitchen-sink.txt $outdir
+pushd $outdir
+ls -l
+open kitchen-sink.txt

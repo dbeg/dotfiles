@@ -1,0 +1,11 @@
+- clean: ['~']
+- link:
+    ~/.dotfiles: ''
+    ~/.gitconfig: gitconfig
+    ~/.gitignore_global: gitignore_global
+    ~/.alias: alias
+    ~/.funcs: funcs    
+    ~/.zlogin: zlogin
+    ~/.zshenv: zshenv
+    ~/.zshrc: zshrc
+    '~/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings': 'Preferences.sublime-settings'

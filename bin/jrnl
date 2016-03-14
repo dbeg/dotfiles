@@ -1,0 +1,10 @@
+#!/bin/bash
+
+today=$(date +"%Y-%m-%d")
+file="${1:-$today}.md"
+
+if [ ! -e file ]; then
+	echo -e "# $today\n" > $file
+fi
+
+open $file

@@ -1,0 +1,39 @@
+[user]
+	name = Dan Beghin
+	email = dbeghin@widen.com
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+[color]
+	ui = true
+[push]
+	default = upstream
+[branch]
+	autosetuprebase = always
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	ppop = !git stash && git pull && git stash pop
+	logy = log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold red)<%an>%Creset' --abbrev-commit --date=relative
+[diff]
+	renamelimit = 20000
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
