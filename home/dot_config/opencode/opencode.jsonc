@@ -1,0 +1,40 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "github-copilot/claude-sonnet-4.6",
+    "small_model": "github-copilot/claude-haiku-4.5",
+    "plugin": [
+        "opencode-models-discovery@latest",
+        // disabled as it seems to conflict with openspec?
+        "superpowers@git+https://github.com/obra/superpowers.git"
+    ],
+    "enabled_providers": [
+        "github-copilot",
+    ],
+    "default_agent": "plan",
+    "agent": {
+        "plan": {
+            "color": "success",
+            "model": "github-copilot/claude-sonnet-4.6"
+        },
+        "build": {
+            "color": "error",
+            "model": "github-copilot/claude-sonnet-4.6"
+        }
+    },
+    "autoupdate": false,
+    "snapshot": false,
+    "lsp": true,
+    "watcher": {
+        "ignore": [
+            "node_modules/**",
+            "dist/**",
+            ".git/**"
+        ]
+    },
+    "permission": {
+        "external_directory": {
+            "/private/tmp/opencode/**": "allow",
+            "/tmp/opencode/**": "allow",
+        }
+    }
+}

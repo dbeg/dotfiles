@@ -1,0 +1,3 @@
+{{ range gitHubKeys $.gh_username -}}
+{{ $.email }} {{ .Key }}
+{{ end -}}

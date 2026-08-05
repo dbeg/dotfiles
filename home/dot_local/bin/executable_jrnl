@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Creates or opens a daily journal entry.
+# Usage: jrnl [date-or-filename]
+#   Default: opens today's entry (YYYY-MM-DD.md)
+#   With arg: opens <arg>.md
+# If the file doesn't exist, it's created with a title header.
+today=$(date +"%Y-%m-%d")
+file="${1:-$today}.md"
+
+if [ ! -e "$file" ]; then
+	printf "# %s\n\n" "$today" > "$file"
+fi
+
+open "$file"

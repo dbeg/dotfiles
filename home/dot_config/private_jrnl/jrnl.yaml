@@ -1,0 +1,19 @@
+colors:
+  body: none
+  date: "#ed8796"
+  tags: "#a6da95"
+  title: "#eed49f"
+default_hour: 9
+default_minute: 0
+editor: code --wait
+encrypt: false
+highlight: true
+indent_character: '|'
+journals:
+  default:
+    journal: ~/Documents/jrnl/journal.md
+linewrap: 79
+tagsymbols: '#@'
+template: false
+timeformat: '%F %r'
+version: v4.3

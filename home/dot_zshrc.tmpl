@@ -1,0 +1,90 @@
+# ==========================================
+# 1. HISTORY CONFIGURATION
+# ==========================================
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY       # Append to history file instead of overwriting
+setopt SHARE_HISTORY        # Share history across all windows (implies INC_APPEND)
+
+# ==========================================
+# 2. NAVIGATION CONFIGURATION
+# ==========================================
+setopt AUTO_CD              # Just type a folder name to change to it
+setopt AUTO_PUSHD           # Automatically push directories to the stack
+setopt PUSHD_IGNORE_DUPS    # Don't push duplicate paths to the stack
+
+# ==========================================
+# 3. COMPLETION & CORRECTION
+# ==========================================
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion
+setopt AUTO_MENU            # Show completion menu immediately
+setopt CORRECT              # Enable command correction for commands, not arguments
+setopt LIST_BEEP            # Beep when listing choices
+
+# ==========================================
+# 4. TERMINAL UI & COLORS
+# ==========================================
+export CLICOLOR=1                               # Enable colors on macOS / BSD
+export LSCOLORS="Gxfxcxdxbxegedabagacad"        # Standard vibrant OMZ color scheme
+export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43" # Linux colors
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
+--color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
+--color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
+--color=selected-bg:#494D64 \
+--color=border:#6E738D,label:#CAD3F5"
+
+export BAT_THEME="base16"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+autoload -Uz compinit && compinit
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Colorize completion items
+zstyle ':completion:*' menu select                      # Allow arrow keys in Tab menu
+
+# ==========================================
+# 5. ENVIRONMENT ACTIVATION (Mise wins the path battle)
+# See .zshenv for PATH setup and Homebrew eval
+# ==========================================
+if command -v mise &>/dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# installed with mise, so source after...
+if command -v fzf &>/dev/null; then
+  eval "$(fzf --zsh)"
+fi
+
+# installed with mise, so source after...
+if command -v wt &>/dev/null; then
+  eval "$(wt config shell init zsh)"
+fi
+
+# ==========================================
+# 6. EXTERNAL DOTFILES & DOTENV
+# ==========================================
+[[ -f "$HOME/.private" ]] && source "$HOME/.private"
+[[ -f "$HOME/.alias" ]] && source "$HOME/.alias"
+[[ -f "$HOME/.funcs" ]] && source "$HOME/.funcs"
+
+# ==========================================
+# 7. ZSH PLUGINS & CONTROLS
+# ==========================================
+if command -v atuin &>/dev/null; then
+  eval "$(atuin init zsh)"
+fi
+
+source "${HOMEBREW_PREFIX:-/usr}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "${HOMEBREW_PREFIX:-/usr}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+if command -v atuin &>/dev/null; then
+  ZSH_AUTOSUGGEST_STRATEGY=(atuin history)
+fi
+
+# ==========================================
+# 8. THEME PROMPT (Always execute last)
+# ==========================================
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi

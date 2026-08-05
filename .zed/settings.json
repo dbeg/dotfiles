@@ -1,0 +1,10 @@
+{
+  "file_types": {
+    "Shell Script": [
+      "*_alias*",
+      "*_funcs*",
+      "*_private*",
+      "*_zsh*"
+    ]
+  }
+}

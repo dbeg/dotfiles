@@ -1,0 +1,5 @@
+{{ if .acquia -}}
+#!/usr/bin/env bash
+set -euo pipefail
+[[ -x "$HOME/.acquia/bootstrap.sh" ]] && "$HOME/.acquia/bootstrap.sh"
+{{- end }}

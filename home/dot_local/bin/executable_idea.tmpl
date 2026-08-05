@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "darwin" }}
+#!/usr/bin/env bash
+# Opens IntelliJ IDEA from the command line.
+# Maps to ~/.local/bin/idea. Handles any file/directory arguments.
+# Uses macOS `open -a` to launch the .app bundle.
+open -na "IntelliJ IDEA.app" --args "$@"
+{{- end }}

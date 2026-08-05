@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ if eq .chezmoi.os "darwin" }}
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew..."
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Ensure the current script session can see 'brew', regardless of architecture
+    if [[ -x /opt/homebrew/bin/brew ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -x /usr/local/bin/brew ]]; then
+      eval "$(/usr/local/bin/brew shellenv)"
+    else
+      echo "ERROR: Homebrew not found on this system." >&2
+      exit 1
+    fi
+  fi
+
+  brewfile="${CHEZMOI_SOURCE_DIR:?CHEZMOI_SOURCE_DIR is unset}/dot_config/homebrew/Brewfile"
+
+  if [[ ! -f "$brewfile" ]]; then
+    echo "ERROR: Brewfile not found at $brewfile" >&2
+    exit 1
+  fi
+
+  echo "Validating Brewfile..."
+  if ! brew bundle check --file="$brewfile" --no-upgrade &>/dev/null; then
+    echo "Brewfile validation passed — running brew bundle install..."
+    brew bundle install --file="$brewfile" --no-upgrade
+  else
+    echo "All Brewfile packages already satisfied."
+  fi
+{{- else }}
+  echo "Homebrew installation skipped: Not running on macOS."
+{{- end }}

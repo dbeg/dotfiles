@@ -1,0 +1,208 @@
+# Based on https://starship.rs/presets/pastel-powerline
+# Ported to a color palette and modified to my liking by dbeg
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "catppuccin_macchiato"
+
+format = """
+[](red)\
+$os\
+$username\
+$hostname\
+[](bg:yellow fg:red)\
+$directory\
+[](fg:yellow bg:green)\
+$git_branch\
+$git_status\
+[](fg:green bg:blue)\
+$mise\
+$c\
+$elixir\
+$elm\
+$golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$maven\
+$nodejs\
+$bun\
+$nim\
+$rust\
+$scala\
+$docker_context\
+[](fg:blue)\
+$fill\
+[](fg:purple)\
+$cmd_duration\
+$time\
+[](fg:purple) 
+$character
+"""
+
+add_newline = true
+
+[fill]
+symbol = " "
+
+[character]
+format = "$symbol"
+success_symbol = '[ 󰅂 ](bold green)'
+error_symbol = '[ 󰅂 ](bold red)'
+
+[os]
+style = "bg:red fg:black"
+disabled = false
+
+[username]
+show_always = true
+style_user = "bg:red fg:black"
+style_root = "bg:red fg:black"
+format = '[$user]($style)'
+aliases = { "dbeghin" = "dan" }
+disabled = false
+
+[hostname]
+style = "bg:red fg:black"
+format = "[@$hostname ]($style)"
+aliases = { "MacBook-Pro-DanBeghin" = "work" }
+ssh_only = false
+disabled = false
+
+[directory]
+style = "bg:yellow fg:black"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Development" = "󰈮"
+"Documents" = "󰈙"
+"Downloads" = ""
+"Music" = ""
+"Pictures" = ""
+
+[c]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[cpp]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol $context ]($style)'
+
+[elixir]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = ""
+style = "bg:green fg:black"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bg:green fg:black"
+format = '[$all_status$ahead_behind ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[gradle]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[maven]
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[mise]
+style = "bg:blue fg:black"
+healthy_symbol = "good"
+unhealthy_symbol = "bad"
+format = '[ $symbol$health ]($style)'
+disabled = false
+
+[nodejs]
+symbol = "󰎙"
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[bun]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥"
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = ""
+style = "bg:blue fg:black"
+format = '[ $symbol ($version) ]($style)'
+
+[cmd_duration]
+style = "bg:purple fg:black"
+format = '[󰔛 $duration-]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:purple fg:black"
+format = '[$time]($style)'
+
+# todo: this is copied into starship_mini.toml too...
+[palettes.catppuccin_macchiato]
+black = "#494d64"
+red = "#ed8796"
+green = "#a6da95"
+yellow = "#eed49f"
+blue = "#8aadf4"
+purple = "#c6a0f6"
+cyan = "#8bd5ca"
+white = "#cad3f5"
+"bright-black" = "#5b6078"
+"bright-red" = "#ec7486"
+"bright-green" = "#8bd5ca"
+"bright-yellow" = "#f0c6a2"
+"bright-blue" = "#78a1f6"
+"bright-purple" = "#f0abfc"
+"bright-cyan" = "#91d7e3"
+"bright-white" = "#b8c0e0"

@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: ${0##*/} [options]
+
+Options:
+  -a, --auto-confirm  Skip confirmations and write the Brewfile and re-add it to chezmoi
+  -h, --help  Show this help message
+EOF
+}
+
+main() {
+    local auto_confirm=false
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -a|--auto-confirm)
+                auto_confirm=true
+                shift
+                ;;
+            -h|--help)
+                usage
+                return 0
+                ;;
+            *)
+                usage >&2
+                return 1
+                ;;
+        esac
+    done
+
+    local tmpfile brewfile
+    tmpfile=$(mktemp)
+    brewfile="$XDG_CONFIG_HOME/homebrew/Brewfile"
+
+    gum style --border normal --margin "1 0" --padding "0 1" "Dumping Homebrew Brewfile..."
+
+    if ! gum spin --title "Running brew bundle dump" -- brew bundle dump --file="$tmpfile" --force; then
+        rm -f "$tmpfile"
+        gum style --border normal --margin "1 0" --padding "0 1" --foreground 196 "Failed to dump Brewfile"
+        return 1
+    fi
+
+    if [[ ! -f "$tmpfile" ]]; then
+        gum style --border normal --margin "1 0" --padding "0 1" --foreground 196 "Brewfile was not dumped"
+        return 1
+    fi
+
+    if cmp -s "$brewfile" "$tmpfile"; then
+        gum style --border normal --margin "1 0" --padding "0 1" "No changes detected"
+        rm -f "$tmpfile"
+        return 0
+    fi
+
+    if [[ "$auto_confirm" != true ]]; then
+        gum style --border normal --margin "1 0" --padding "0 1" "Generated Brewfile preview"
+        bat --paging=never -l ruby "$tmpfile"
+
+        if [[ -f "$brewfile" ]] && gum confirm "Show diff against existing Brewfile?"; then
+            echo
+            diff -u "$brewfile" "$tmpfile" | bat --paging=never -l diff || true
+        fi
+
+        if ! gum confirm "Write new Brewfile to $brewfile?"; then
+            rm -f "$tmpfile"
+            gum style --border normal --margin "1 0" --padding "0 1" "Discarded Brewfile changes"
+            return 0
+        fi
+    fi
+
+    mkdir -p "${brewfile%/*}"
+    mv "$tmpfile" "$brewfile"
+    gum style --border normal --margin "1 0" --padding "0 1" "Wrote Brewfile to $brewfile"
+
+    if [[ "$auto_confirm" == true ]] || gum confirm "Re-add Brewfile to chezmoi?"; then
+        chezmoi re-add "$brewfile"
+        gum style --border normal --margin "1 0" --padding "0 1" "Re-added Brewfile to chezmoi"
+    fi
+}
+
+main "$@"

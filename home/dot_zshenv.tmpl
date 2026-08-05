@@ -1,0 +1,70 @@
+typeset -U path manpath
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_BIN_HOME="$HOME/.local/bin"
+
+if command -v code >/dev/null 2>&1; then
+  export EDITOR="code --wait"
+fi
+
+{{ if eq .chezmoi.os "darwin" }}
+  if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 1.8 &>/dev/null; then
+    export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+  fi
+{{- end }}
+
+export YARN_ENABLE_SCRIPTS=false
+export NPM_CONFIG_IGNORE_SCRIPTS=true
+
+export BITWARDENCLI_APPDATA_DIR="$XDG_CONFIG_HOME/bw"
+export TEALDEER_CONFIG_DIR="$XDG_CONFIG_HOME/tealdeer"
+
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ENV_HINTS=1
+
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
+export GOPATH="$XDG_STATE_HOME/go"
+
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+
+# 1. Establish absolute baseline system paths
+path=(
+  /usr/local/bin
+  /usr/bin
+  /bin
+  /usr/local/sbin
+  /usr/sbin
+  /sbin
+)
+
+# 2. Eval Homebrew if we find it on the sytem (darwin only...)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# 3. Eval mise shims to ensure we have tool access in non-interactive shells
+if command -v mise &>/dev/null; then
+    eval "$(mise activate zsh --shims)"
+fi
+
+# 4. Enforce Priority Queue: Re-prepend XDG_BIN to the absolute front
+path=(
+  $XDG_BIN_HOME
+  $path
+)
+
+{{ if .wsl -}}
+# 5. WSL2: expose Windows OpenSSH binaries so ssh.exe / ssh-add.exe are accessible
+#    (Bitwarden SSH agent on Windows is accessed via ssh.exe, no SSH_AUTH_SOCK needed)
+path=( $path /mnt/c/Windows/System32/OpenSSH )
+{{- end }}
+
+# Acquia work config (sets env vars, sources secrets.env)
+[[ -f "$HOME/.acquia/env.sh" ]] && source "$HOME/.acquia/env.sh"
+
+export PATH MANPATH

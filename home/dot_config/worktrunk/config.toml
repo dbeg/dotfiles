@@ -1,0 +1,4 @@
+worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
+skip-shell-integration-prompt = true
+
+[projects]

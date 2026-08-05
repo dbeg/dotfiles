@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ if eq .chezmoi.os "linux" }}
+  if ! command -v apt &> /dev/null; then
+    echo "APT installation skipped: apt command not found."
+    exit 0
+  fi
+
+  sudo apt update
+  # Skip the broad system upgrade,
+  # let user handle it manually...
+  # sudo apt upgrade -y
+  sudo apt install -y \
+    curl \
+    git \
+    zsh \
+    zsh-autosuggestions \
+    zsh-syntax-highlighting
+
+  if ! command -v mise &> /dev/null; then
+    echo "--- Installing mise ---"
+    mise_install_path="$HOME/.local/bin/mise"
+    curl https://mise.run | MISE_INSTALL_PATH=$mise_install_path sh
+    echo "--- Installing mise tools ---"
+    "$mise_install_path" install
+  fi
+
+  if ! command -v getnf &> /dev/null; then
+    echo "--- Installing getnf and JetBrainsMonoNF ---"
+    curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | \
+      bash -s -- --silent && "$HOME/.local/bin/getnf" -i "JetBrainsMono"
+  fi
+
+  current_shell="$(getent passwd "$USER" | cut -d: -f7)"
+  zsh_path="$(command -v zsh)"
+  if [[ "$current_shell" != "$zsh_path" ]]; then
+    echo "--- Changing shell to $zsh_path ---"
+    sudo chsh -s "$zsh_path" "$USER"
+    exec "$zsh_path" -lc 'echo "--- DONE! ---"; exec zsh -l'
+  fi
+
+  # No shell change needed, still echo done
+  echo "--- DONE! ---"
+{{- else }}
+  echo "APT installation skipped: Not running on Linux."
+{{- end }}

@@ -1,0 +1,33 @@
+# Define some nice oh-my-zsh-like aliases
+{{ if eq .chezmoi.os "darwin" }}
+    alias ls='ls -G'
+{{- else }}
+    alias ls='ls --color=auto'
+{{- end }}
+
+alias l='ls -lah'
+alias la='ls -lAh'
+alias ll='ls -lh'
+
+alias zl='eza -la --inode --octal-permissions --header --icons --time-style=long-iso'
+alias zla='eza -lA --inode --octal-permissions --header --icons --time-style=long-iso'
+alias zll='eza -l --inode --octal-permissions --header --icons --time-style=long-iso'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+alias cls='clear'
+alias md='mkdir -p'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Other random aliases that I find useful
+alias cm='chezmoi'
+alias mist='mise'
+
+alias dockerrm='docker rm $(docker ps -a -q) && docker rmi $(docker images -q)'
+alias dcu='docker-compose up ${1}'
+alias dcd='docker-compose down'
