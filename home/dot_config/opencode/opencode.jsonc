@@ -1,25 +1,14 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "github-copilot/claude-sonnet-4.6",
-    "small_model": "github-copilot/claude-haiku-4.5",
+    "model": "opencode/big-pickle",
+    "small_model": "opencode/kimi-k2.5-free",
     "plugin": [
-        "opencode-models-discovery@latest",
-        // disabled as it seems to conflict with openspec?
         "superpowers@git+https://github.com/obra/superpowers.git"
-    ],
-    "enabled_providers": [
-        "github-copilot",
     ],
     "default_agent": "plan",
     "agent": {
-        "plan": {
-            "color": "success",
-            "model": "github-copilot/claude-sonnet-4.6"
-        },
-        "build": {
-            "color": "error",
-            "model": "github-copilot/claude-sonnet-4.6"
-        }
+        "plan": { "color": "success" },
+        "build": { "color": "error" }
     },
     "autoupdate": false,
     "snapshot": false,
@@ -33,6 +22,8 @@
     },
     "permission": {
         "external_directory": {
+            // We might need to steer agents to these
+            // directories for caching and temporary files.
             "/private/tmp/opencode/**": "allow",
             "/tmp/opencode/**": "allow",
         }
