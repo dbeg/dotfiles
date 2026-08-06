@@ -1,18 +1,18 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
 [tools]
-# core tools
-# general cli tools
-age = "latest"
-# no direct/github atuin darwin-amd64 binary
-# let this be installed via homebrew for now
+{{- if or (not (eq .chezmoi.os "darwin")) (not (eq .chezmoi.arch "amd64")) -}}
+# No prebuilt darwin-amd64 binaries for
+# these on any backends... install via
+# Homebrew on darwin-amd64 instead...
 "atuin" = "latest"
+delta = "latest"
+{{- end }}
+
+age = "latest"
 bat = "latest"
 bitwarden = "latest"
 chezmoi = "latest"
-# no direct/github delta darwin-amd64 binary
-# let this be installed via homebrew for now
-delta = "latest"
 eza = "latest"
 gum = "latest"
 fastfetch = "latest"
