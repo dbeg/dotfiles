@@ -1,1 +1,3 @@
-# work paths moved to spoke (~/.acquia)
+{{ if not .acquia -}}
+run_after_acquia-bootstrap.sh
+{{- end -}}
