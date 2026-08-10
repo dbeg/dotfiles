@@ -2,14 +2,13 @@
 {{- $gh_username := promptStringOnce . "gh_username" "GitHub Username (used for git commit signature validation)" "dbeg" -}}
 {{- $email := promptStringOnce . "email" "Email address (used for git)" "dbeg@users.noreply.github.com" -}}
 {{- $name := promptStringOnce . "name" "Full name (used for git)" "Dan Beghin" -}}
+{{- $atuin_url := promptStringOnce . "atuin_url" "Atuin URL (example: https://atuin.lab.home.arpa)" -}}
 
-{{- $gh_signing_key := "id_ed25519_github_dbeg_work" -}}
 {{- $bw_url := "" -}}
+{{- $gh_signing_key := "id_ed25519_github_dbeg_work" -}}
 {{ if not $acquia -}}
-  {{- $gh_signing_key = "github-dbeg-2026.07" -}}
-  
-  # Personal Bitwarden URL (since I'm self-hosting a Vaultwarden instance)
   {{- $bw_url = promptStringOnce . "bw_url" "Bitwarden URL (example: https://bw.lab.home.arpa)" -}}
+  {{- $gh_signing_key = "id_ed25519_github_dbeg_personal" -}}
 {{- end }}
 
 {{- $wsl := false -}}
@@ -22,11 +21,12 @@
 
 [data]
   acquia         = {{ $acquia }}
-  gh_username    = {{ $gh_username | quote }}
-  gh_signing_key = {{ $gh_signing_key | quote }}
   email          = {{ $email | quote }}
   name           = {{ $name | quote }}
+  atuin_url      = {{ $atuin_url | quote }}
   bw_url         = {{ $bw_url | quote }}
+  gh_username    = {{ $gh_username | quote }}
+  gh_signing_key = {{ $gh_signing_key | quote }}
   wsl            = {{ $wsl }}
 
 [diff]
