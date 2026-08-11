@@ -48,6 +48,9 @@
 [pull]
     rebase = true
 
+[log]
+	showSignature = true
+
 [alias]
     st     = status
     ci     = commit
@@ -55,7 +58,7 @@
     co     = checkout
     ppop   = !git stash && git pull && git stash pop
     pubjar = !git commit --allow-empty -m "publish jars"
-	logy = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)%an <%ae>%Creset %C(magenta)[%G? - %GS]%Creset' --abbrev-commit --date=relative
+	logy = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%G?|%an|%GS]%Creset' --abbrev-commit --date=relative
 
 [merge]
     tool = vscode

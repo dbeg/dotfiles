@@ -1,8 +1,8 @@
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never
-gui:
+      command: delta --dark --paging=never
+gui: 
   theme:
     activeBorderColor:
       - '#8bd5ca'
