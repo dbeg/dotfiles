@@ -1,8 +1,8 @@
-{{ if .acquia }}
-[".acquia"]
+{{ if .work }}
+[".work"]
     type = "git-repo"
     url = "git@github.com:dbeg/dotfiles-acquia.git"
     refreshPeriod = "168h"
-    [".acquia".pull]
+    [".work".pull]
         args = ["--ff-only"]
 {{ end }}

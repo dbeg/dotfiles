@@ -1,4 +1,4 @@
-{{- $acquia := promptBoolOnce . "acquia" "Is this an Acquia work machine" false -}}
+{{- $work := promptBoolOnce . "work" "Is this a work machine" false -}}
 {{- $gh_username := promptStringOnce . "gh_username" "GitHub Username (used for git commit signature validation)" "dbeg" -}}
 {{- $email := promptStringOnce . "email" "Email address (used for git)" "dbeg@users.noreply.github.com" -}}
 {{- $name := promptStringOnce . "name" "Full name (used for git)" "Dan Beghin" -}}
@@ -6,7 +6,7 @@
 
 {{- $bw_url := "" -}}
 {{- $gh_signing_key := "id_ed25519_github_dbeg_work" -}}
-{{ if not $acquia -}}
+{{ if not $work -}}
   {{- $bw_url = promptStringOnce . "bw_url" "Bitwarden URL (example: https://bw.lab.home.arpa)" -}}
   {{- $gh_signing_key = "id_ed25519_github_dbeg_personal" -}}
 {{- end }}
@@ -20,7 +20,7 @@
 {{- end }}
 
 [data]
-  acquia         = {{ $acquia }}
+  work           = {{ $work }}
   email          = {{ $email | quote }}
   name           = {{ $name | quote }}
   atuin_url      = {{ $atuin_url | quote }}

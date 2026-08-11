@@ -64,7 +64,7 @@ path=(
 path=( $path /mnt/c/Windows/System32/OpenSSH )
 {{- end }}
 
-# Acquia work config (sets env vars, sources secrets.env)
-[[ -f "$HOME/.acquia/env.sh" ]] && source "$HOME/.acquia/env.sh"
+# Work config (sets env vars, sources secrets.env)
+[[ -f "$HOME/.work/env.sh" ]] && source "$HOME/.work/env.sh"
 
 export PATH MANPATH
