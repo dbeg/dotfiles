@@ -22,8 +22,9 @@
     },
     "permission": {
         "external_directory": {
-            // We might need to steer agents to these
-            // directories for caching and temporary files.
+            // Scoped temp/caching workspace for agents. AGENTS.md (Tooling)
+            // points agents here so temp work stays in a permissioned dir
+            // instead of the working/home dir or unpermissioned $TMPDIR.
             "/private/tmp/opencode/**": "allow",
             "/tmp/opencode/**": "allow",
         }
