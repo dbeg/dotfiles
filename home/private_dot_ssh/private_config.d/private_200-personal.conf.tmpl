@@ -1,0 +1,18 @@
+# Personal SSH agent configuration...
+#
+# Bitwarden Desktop SSH Agent Integration:
+#
+#   macOS (.dmg): SSH_AUTH_SOCK=~/.bitwarden-ssh-agent.sock
+#   Windows:      Listens on fixed named pipe \\.\pipe\openssh-ssh-agent
+#   WSL2:         Bridged from Windows named pipe to ~/.ssh/agent.sock 
+#                 via npiperelay + socat (managed in shell config/dotfiles).
+#
+# Directing SSH traffic to the bridged agent socket in WSL2/Linux:
+{{- if eq .chezmoi.os "linux" }}
+Host *
+    IdentityAgent ~/.ssh/agent.sock
+{{- end }}
+
+# Setup references:
+#   Bitwarden SSH Agent: https://bitwarden.com/help/ssh-agent/
+#   npiperelay Bridge Guide: https://www.rebelpeon.com/bitwarden-ssh-agent-on-wsl2/

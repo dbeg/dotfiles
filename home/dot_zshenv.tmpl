@@ -11,9 +11,46 @@ if command -v code >/dev/null 2>&1; then
 fi
 
 {{ if eq .chezmoi.os "darwin" }}
-  if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 1.8 &>/dev/null; then
-    export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
-  fi
+if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 1.8 &>/dev/null; then
+  export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+fi
+{{- end }}
+
+{{ if .wsl -}}
+# Bitwarden SSH Agent Bridge for WSL2
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+
+if [ ! -S "$SSH_AUTH_SOCK" ]; then
+    rm -f "$SSH_AUTH_SOCK"
+
+    # Cache location for the resolved binary path
+    NPIPERELAY_CACHE="$XDG_CACHE_HOME/npiperelay_path"
+
+    # 1. Read cached path, or locate via Windows PATH/WinGet glob fallback
+    if [ -f "$NPIPERELAY_CACHE" ] && [ -x "$(cat "$NPIPERELAY_CACHE")" ]; then
+        NPIPERELAY_PATH=$(cat "$NPIPERELAY_CACHE")
+    else
+        mkdir -p "$XDG_CACHE_HOME"
+        WIN_PATH=$(where.exe npiperelay.exe 2>/dev/null | head -n 1 | tr -d '\r')
+
+        if [ -n "$WIN_PATH" ]; then
+            NPIPERELAY_PATH=$(wslpath -u "$WIN_PATH")
+        else
+            # Wildcard fallback to handle WinGet directory structure dynamically
+            NPIPERELAY_PATH=$(ls /mnt/c/Users/*/AppData/Local/Microsoft/WinGet/Packages/albertony.npiperelay*/npiperelay.exe 2>/dev/null | head -n 1)
+        fi
+
+        # Save to cache if found
+        if [ -n "$NPIPERELAY_PATH" ]; then
+            echo "$NPIPERELAY_PATH" > "$NPIPERELAY_CACHE"
+        fi
+    fi
+
+    # 2. Spawn the background bridge
+    if [ -n "$NPIPERELAY_PATH" ]; then
+        ( setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"${NPIPERELAY_PATH} -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
+    fi
+fi
 {{- end }}
 
 export YARN_ENABLE_SCRIPTS=false
@@ -57,12 +94,6 @@ path=(
   $XDG_BIN_HOME
   $path
 )
-
-{{ if .wsl -}}
-# 5. WSL2: expose Windows OpenSSH binaries so ssh.exe / ssh-add.exe are accessible
-#    (Bitwarden SSH agent on Windows is accessed via ssh.exe, no SSH_AUTH_SOCK needed)
-path=( $path /mnt/c/Windows/System32/OpenSSH )
-{{- end }}
 
 # Work config (sets env vars, sources secrets.env)
 [[ -f "$HOME/.work/env.sh" ]] && source "$HOME/.work/env.sh"
