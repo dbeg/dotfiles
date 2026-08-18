@@ -18,7 +18,7 @@ set -euo pipefail
     fi
   fi
 
-  brewfile="${CHEZMOI_SOURCE_DIR:?CHEZMOI_SOURCE_DIR is unset}/dot_config/homebrew/Brewfile"
+  brewfile="${CHEZMOI_SOURCE_DIR:?CHEZMOI_SOURCE_DIR is unset}/dot_config/homebrew/private_Brewfile"
 
   if [[ ! -f "$brewfile" ]]; then
     echo "ERROR: Brewfile not found at $brewfile" >&2

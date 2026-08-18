@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Download and import the GitHub Web Flow GPG key, and set a local trust level to "full".
 # This will allow us to verify the signature of commits made by GitHub Web Flow.
-
 set -euo pipefail
 
 echo "Downloading and importing the GitHub Web Flow GPG key..."
