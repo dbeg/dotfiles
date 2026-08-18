@@ -77,11 +77,14 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [directory.substitutions]
-"Development" = "󰈮"
-"Documents" = "󰈙"
-"Downloads" = ""
-"Music" = ""
-"Pictures" = ""
+"codeberg.org" = ""
+"github.com" = ""
+"gitlab.com" = ""
+"src" = ""
+"Documents" = "󰉌"
+"Downloads" = "󰉍"
+"Music" = "󱍙"
+"Pictures" = "󰉏"
 
 [c]
 symbol = ""

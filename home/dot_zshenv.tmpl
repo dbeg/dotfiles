@@ -6,6 +6,13 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_BIN_HOME="$HOME/.local/bin"
 
+export DOT_SRC_HOME="$HOME/src"
+export DOT_SRC_CODEBERG="$DOT_SRC_HOME/codeberg.org"
+export DOT_SRC_GITHUB="$DOT_SRC_HOME/github.com"
+export DOT_SRC_GITLAB="$DOT_SRC_HOME/gitlab.com"
+export DOT_SRC_DBEG="$DOT_SRC_GITHUB/dbeg"
+export DOT_SRC_LOCAL="$DOT_SRC_HOME/local"
+
 if command -v code >/dev/null 2>&1; then
   export EDITOR="code --wait"
 fi
