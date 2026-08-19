@@ -61,6 +61,11 @@ if command -v wt &>/dev/null; then
   eval "$(wt config shell init zsh)"
 fi
 
+# installed with mise, so source after...
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
 # ==========================================
 # 6. EXTERNAL DOTFILES & DOTENV
 # ==========================================
