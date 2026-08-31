@@ -7,6 +7,15 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "disable_ai": true,
+  "agent": {
+    "sidebar_side": "left",
+    "favorite_models": [],
+    "model_parameters": [],
+    "sandbox_permissions": {
+      "allow_unsandboxed": false
+    }
+  },
   "edit_predictions": {
     "provider": "copilot"
   },
