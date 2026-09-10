@@ -1,0 +1,7 @@
+{
+  "setup.keybindings.gui": {
+    "icon": "",
+    "label": "Keybindings Manager",
+    "action": "omarchy-shell shell summon meviusisback.keybinds"
+  }
+}

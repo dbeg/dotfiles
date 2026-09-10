@@ -1,0 +1,12 @@
+[theme]
+name = "omarchy" # @ansi_(n) traces the terminal (omarchy) palette
+
+[colors]
+AlertInfo = "@ansi_(2)"
+AlertWarn = "@ansi_(3)"
+AlertError = "@ansi_(1)"
+Annotation = "@ansi_(8)"
+Base = "@ansi_(7)"
+Guidance = "@ansi_(8)"
+Important = "@ansi_(1)"
+Title = "@ansi_(6)"

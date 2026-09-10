@@ -23,6 +23,8 @@ if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 1.8 &>/dev/null;
 fi
 {{- end }}
 
+export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+
 {{ if .wsl -}}
 # Bitwarden SSH Agent Bridge for WSL2
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"

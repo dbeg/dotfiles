@@ -30,11 +30,11 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"        # Standard vibrant OMZ color sch
 export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43" # Linux colors
 
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
---color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
---color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
---color=selected-bg:#494D64 \
---color=border:#6E738D,label:#CAD3F5"
+--color=bg+:bright-black,bg:black,spinner:cyan,hl:red \
+--color=fg:white,header:red,info:magenta,pointer:cyan \
+--color=marker:bright-white,fg+:bright-white,prompt:magenta,hl+:bright-red \
+--color=selected-bg:black \
+--color=border:bright-black,label:white"
 
 export BAT_THEME="base16"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -80,8 +80,8 @@ if command -v atuin &>/dev/null; then
   eval "$(atuin init zsh)"
 fi
 
-source "${HOMEBREW_PREFIX:-/usr}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "${HOMEBREW_PREFIX:-/usr}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 if command -v atuin &>/dev/null; then
   ZSH_AUTOSUGGEST_STRATEGY=(atuin history)

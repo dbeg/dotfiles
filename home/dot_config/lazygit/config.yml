@@ -5,29 +5,29 @@ git:
 gui: 
   theme:
     activeBorderColor:
-      - '#8bd5ca'
+      - cyan
       - bold
     inactiveBorderColor:
-      - '#a5adcb'
+      - white
     searchingActiveBorderColor:
-      - '#eed49f'
+      - yellow
     optionsTextColor:
-      - '#8aadf4'
+      - blue
     selectedLineBgColor:
-      - '#363a4f'
+      - blue
     inactiveViewSelectedLineBgColor:
-      - '#6e738d'
+      - black
     cherryPickedCommitFgColor:
-      - '#8bd5ca'
+      - cyan
     cherryPickedCommitBgColor:
-      - '#494d64'
+      - black
     markedBaseCommitFgColor:
-      - '#8aadf4'
+      - blue
     markedBaseCommitBgColor:
-      - '#eed49f'
+      - yellow
     unstagedChangesColor:
-      - '#ed8796'
+      - red
     defaultFgColor:
-      - '#cad3f5'
+      - white
   authorColors:
-    '*': '#b7bdf8'
+    '*': cyan

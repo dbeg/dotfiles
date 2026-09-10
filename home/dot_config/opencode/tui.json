@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/tui.json",
-    "theme": "catppuccin-macchiato",
+    "theme": "system",
     "scroll_acceleration": {
         "enabled": true
     },

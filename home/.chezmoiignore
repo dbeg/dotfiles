@@ -1,3 +1,11 @@
 {{ if not .work -}}
 work-bootstrap.sh
 {{- end -}}
+
+.config/omarchy/plugins
+.config/omarchy/themes
+.config/omarchy/backgrounds
+.config/omarchy/themed
+.config/omarchy/shell.json.bak
+.config/omarchy/hooks/post-update.d
+.config/omarchy/hooks/**/*.sample
