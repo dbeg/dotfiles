@@ -10,7 +10,7 @@
 # Directing SSH traffic to the bridged agent socket in WSL2/Linux:
 {{- if eq .chezmoi.os "linux" }}
 Host *
-    IdentityAgent ~/.ssh/agent.sock
+    IdentityAgent ~/.bitwarden-ssh-agent.sock
 {{- end }}
 
 # Setup references:
