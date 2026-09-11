@@ -49,6 +49,40 @@ brew "ruby-build"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+# Command-line utility for comparing and merging files
+brew "age"
+# Colorful cat clone with syntax highlighting
+brew "bat"
+# Bitwarden command-line interface
+brew "bitwarden-cli"
+# Manage dotfiles across multiple machines
+brew "chezmoi"
+# Modern replacement for ls
+brew "eza"
+# Fast, cross-platform system fetch
+brew "fastfetch"
+# GitHub command-line interface
+brew "gh"
+# Gitleaks detects secrets in your git repos
+brew "gitleaks"
+# A tool for glamorous shell scripts
+brew "gum"
+# Watch command with highlighting and diff
+brew "hwatch"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Terminal-based AI coding assistant
+brew "opencode"
+# Recursively search files
+brew "ripgrep"
+# Minimal, blazing fast, cross-platform prompt
+brew "starship"
+# Command-line note taker
+brew "tealdeer"
+# Command line tool for managing worktrees
+brew "worktrunk"
+# Jump to directories
+brew "zoxide"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Open source IDE for exploring and testing APIs
