@@ -13,3 +13,9 @@ work-bootstrap.sh
 {{ if not .debian -}}
 .config/mise/conf.d/tools-debian.toml
 {{- end }}
+{{ if not (eq .chezmoi.os "darwin") -}}
+.zshenv-darwin
+{{- end }}
+{{ if not .wsl -}}
+.zshenv-wsl
+{{- end }}
