@@ -9,3 +9,7 @@ work-bootstrap.sh
 .config/omarchy/shell.json.bak
 .config/omarchy/hooks/post-update.d
 .config/omarchy/hooks/**/*.sample
+
+{{ if not .debian -}}
+.config/mise/conf.d/tools-debian.toml
+{{- end }}
