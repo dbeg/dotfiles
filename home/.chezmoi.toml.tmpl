@@ -19,6 +19,23 @@
   {{- end -}}
 {{- end }}
 
+{{- $debian := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+  {{- $os_id := get .chezmoi.osRelease "id" | lower -}}
+  {{- $os_id_like := get .chezmoi.osRelease "idLike" | lower -}}
+  {{- if or (contains "debian" $os_id) (contains "ubuntu" $os_id) (contains "debian" $os_id_like) (contains "ubuntu" $os_id_like) -}}
+    {{- $debian = true -}}
+  {{- end -}}
+{{- end }}
+
+{{- $arch_family := false -}}
+{{- if eq .chezmoi.os "linux" -}}
+  {{- $os_id_like := get .chezmoi.osRelease "idLike" | lower -}}
+  {{- if contains "arch" $os_id_like -}}
+    {{- $arch_family = true -}}
+  {{- end -}}
+{{- end }}
+
 [data]
   work           = {{ $work }}
   email          = {{ $email | quote }}
@@ -28,6 +45,8 @@
   gh_username    = {{ $gh_username | quote }}
   gh_signing_key = {{ $gh_signing_key | quote }}
   wsl            = {{ $wsl }}
+  debian         = {{ $debian }}
+  arch_family    = {{ $arch_family }}
 
 [diff]
   command = "code"
