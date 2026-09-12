@@ -1,6 +1,6 @@
 {
   "bar": {
-    "centerAnchor": "tmn73.calendar",
+    "centerAnchor": "omarchy.clock",
     "layout": {
       "center": [
         {
@@ -24,7 +24,7 @@
       ],
       "left": [
         {
-          "id": "omarchy.menu"
+          "id": "evindor.keystroke"
         },
         {
           "id": "omarchy.workspaces"
@@ -34,9 +34,6 @@
         },
         {
           "id": "tenzin.auto-workspace"
-        },
-        {
-          "id": "sid.sessions"
         }
       ],
       "right": [
@@ -73,10 +70,12 @@
     "lock": 300,
     "screensaver": 300
   },
-  "plugins": [
-    {
-      "id": "meviusisback.keybinds"
-    }
+  "plugins": [],
+  "version": 1,
+  "disabledPlugins": [
+    "omarchy.menu"
   ],
-  "version": 1
+  "cloneSourceRestores": [
+    "evindor.keystroke"
+  ]
 }

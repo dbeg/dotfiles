@@ -6,6 +6,7 @@
         "superpowers@git+https://github.com/obra/superpowers.git"
     ],
     "default_agent": "plan",
+    "shell": "/usr/bin/zsh",
     "agent": {
         "plan": { "color": "success" },
         "build": { "color": "error" }

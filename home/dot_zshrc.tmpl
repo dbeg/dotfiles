@@ -39,6 +39,10 @@ export FZF_DEFAULT_OPTS=" \
 export BAT_THEME="base16"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# Subshells spawned by tools (chezmoi cd, etc.) use $SHELL,
+# which on Omarchy defaults to bash
+export SHELL="$(command -v zsh)"
+
 autoload -Uz compinit && compinit
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Colorize completion items
 zstyle ':completion:*' menu select                      # Allow arrow keys in Tab menu

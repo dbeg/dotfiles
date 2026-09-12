@@ -1,6 +1,7 @@
 # Dynamic theme colors
 config-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"
 
+# ZSH override (leaving bash for omarchy)
 command = /usr/bin/zsh
 
 # Font
@@ -10,15 +11,15 @@ font-size = 9
 
 # Window
 window-theme = ghostty
-window-padding-x = 14
-window-padding-y = 14
+window-padding-x = 12
+window-padding-y = 12
 confirm-close-surface=false
 resize-overlay = never
 gtk-toolbar-style = flat
 
 # Cursor styling
 cursor-style = "block"
-cursor-style-blink = false
+cursor-style-blink = true
 
 # Cursor styling + SSH session terminfo
 # (all shell integration options must be passed together)

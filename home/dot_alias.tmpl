@@ -5,13 +5,13 @@
     alias ls='ls --color=auto'
 {{- end }}
 
-alias l='ls -lah'
-alias la='ls -lAh'
-alias ll='ls -lh'
+#alias l='ls -lah'
+#alias la='ls -lAh'
+#alias ll='ls -lh'
 
-alias zl='eza -la --inode --octal-permissions --header --icons --time-style=long-iso'
-alias zla='eza -lA --inode --octal-permissions --header --icons --time-style=long-iso'
-alias zll='eza -l --inode --octal-permissions --header --icons --time-style=long-iso'
+alias l='eza -la --inode --octal-permissions --header --icons --time-style=long-iso'
+alias la='eza -lA --inode --octal-permissions --header --icons --time-style=long-iso'
+alias ll='eza -l --inode --octal-permissions --header --icons --time-style=long-iso'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -23,6 +23,10 @@ alias md='mkdir -p'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+alias dev='cd $DOT_SRC_HOME'
+alias devd='cd $DOT_SRC_DBEG'
+alias devl='cd $DOT_SRC_LOCAL'
 
 # Other random aliases that I find useful
 alias cm='chezmoi'
