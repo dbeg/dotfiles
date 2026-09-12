@@ -1,7 +1,3 @@
-{{ if not .work -}}
-work-bootstrap.sh
-{{- end -}}
-
 .config/omarchy/plugins
 .config/omarchy/themes
 .config/omarchy/backgrounds
@@ -9,3 +5,19 @@ work-bootstrap.sh
 .config/omarchy/shell.json.bak
 .config/omarchy/hooks/post-update.d
 .config/omarchy/hooks/**/*.sample
+
+{{ if not .is_darwin -}}
+.zshenv-darwin
+{{- end }}
+
+{{ if not .is_debian -}}
+.config/mise/conf.d/tools-debian.toml
+{{- end }}
+
+{{ if not .is_wsl -}}
+.zshenv-wsl
+{{- end }}
+
+{{ if not .work -}}
+work-bootstrap.sh
+{{- end -}}

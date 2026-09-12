@@ -33,7 +33,7 @@
 	pager		  = delta
 {{- if eq .chezmoi.os "windows" }}
 	sshCommand    = C:/Windows/System32/OpenSSH/ssh.exe
-{{- else if .wsl }}
+{{- else if .is_wsl }}
 	sshCommand    = ssh.exe
 {{- end }}
 

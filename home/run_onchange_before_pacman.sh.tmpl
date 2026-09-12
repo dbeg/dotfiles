@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{ if .is_arch }}
+if ! command -v pacman >/dev/null 2>&1; then
+  echo "pacman installation skipped: pacman not found."
+  exit 0
+fi
+
+if ! command -v yay >/dev/null 2>&1; then
+  echo "ERROR: yay not found — required for AUR package 'hwatch'." >&2
+  exit 1
+fi
+
+sudo pacman -Sy --noconfirm
+sudo pacman -S --needed --noconfirm \
+  age \
+  atuin \
+  bat \
+  bitwarden-cli \
+  btop \
+  chezmoi \
+  eza \
+  fastfetch \
+  fzf \
+  git-delta \
+  gitleaks \
+  github-cli \
+  gum \
+  lazygit \
+  mise-bin \
+  opencode \
+  ripgrep \
+  starship \
+  tealdeer \
+  ttf-jetbrains-mono-nerd-basic \
+  worktrunk \
+  zoxide \
+  zsh \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting
+
+yay -S --needed --noconfirm --answerdiff=None --answerclean=None hwatch
+{{ else }}
+echo "pacman installation skipped: Not Linux/Arch-family."
+{{ end }}

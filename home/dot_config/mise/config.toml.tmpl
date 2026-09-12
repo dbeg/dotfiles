@@ -1,34 +1,5 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
-[tools]
-{{- if or (not (eq .chezmoi.os "darwin")) (not (eq .chezmoi.arch "amd64")) -}}
-# No prebuilt darwin-amd64 binaries for
-# these on any backends... install via
-# Homebrew on darwin-amd64 instead...
-"atuin" = "latest"
-delta = "latest"
-{{- end }}
-
-age = "latest"
-bat = "latest"
-bitwarden = "latest"
-chezmoi = "latest"
-eza = "latest"
-gum = "latest"
-fastfetch = "latest"
-fzf = "latest"
-gh = "latest"
-gitleaks = "latest"
-hwatch = "latest"
-lazygit = "latest"
-opencode = "latest"
-ripgrep = "latest"
-starship = "latest"
-worktrunk = "latest"
-zoxide = "latest"
-
-"github:tealdeer-rs/tealdeer" = "latest"
-
 [settings]
 gpg_verify = true
 minimum_release_age = "2d"

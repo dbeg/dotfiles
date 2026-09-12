@@ -34,7 +34,7 @@ chezmoi apply --refresh-externals # refresh externals manually during apply
 | **Dotfiles** | [chezmoi](https://chezmoi.io) |
 | **Secrets** | [chezmoi password manager integrations](https://www.chezmoi.io/user-guide/password-managers/) via [Bitwarden](https://bitwarden.com/help/cli) |
 | **Terminals** | [Ghostty](https://ghostty.org), [iTerm2](https://iterm2.com) |
-| **Packmans** | [Homebrew](https://brew.sh) (formulae/casks defined in [`Brewfile`](home/dot_config/homebrew/Brewfile)), [mise](https://mise.jdx.dev) (generally just runtimes, but exploring using this more as a cross-system package manager... tools defined in [`config.toml`](home/dot_config/mise/config.toml)) |
+| **Packmans** | [Homebrew](https://brew.sh) (macOS formulae/casks in [`Brewfile`](home/dot_config/homebrew/Brewfile)), [pacman](https://wiki.archlinux.org/title/Pacman) + [yay](https://github.com/Jguer/yay) (Omarchy/Arch, driven by `run_onchange_before_pacman.sh.tmpl`), [apt](https://en.wikipedia.org/wiki/APT_%28software%29) + [mise](https://mise.jdx.dev) (Debian/WSL; CLI tools in [`tools-debian.toml`](home/dot_config/mise/conf.d/tools-debian.toml.tmpl)), mise reserved for runtimes |
 | **Shell/CLIs** | [zsh](https://www.zsh.org) (and a few plugins), [Starship](https://starship.rs), [atuin](https://atuin.sh), [fzf](https://github.com/junegunn/fzf), and more... |
 | **Themes** | [Catppuccin](https://catppuccin.com) Macchiato EVERYWHERE |
 
