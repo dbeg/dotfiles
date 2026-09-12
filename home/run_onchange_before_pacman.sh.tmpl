@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{ if and (eq .chezmoi.os "linux") .arch_family }}
+{{ if .is_arch }}
 if ! command -v pacman >/dev/null 2>&1; then
   echo "pacman installation skipped: pacman not found."
   exit 0

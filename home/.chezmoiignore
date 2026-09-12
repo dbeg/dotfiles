@@ -10,12 +10,12 @@ work-bootstrap.sh
 .config/omarchy/hooks/post-update.d
 .config/omarchy/hooks/**/*.sample
 
-{{ if not .debian -}}
+{{ if not .is_debian -}}
 .config/mise/conf.d/tools-debian.toml
 {{- end }}
-{{ if not (eq .chezmoi.os "darwin") -}}
+{{ if not .is_darwin -}}
 .zshenv-darwin
 {{- end }}
-{{ if not .wsl -}}
+{{ if not .is_wsl -}}
 .zshenv-wsl
 {{- end }}

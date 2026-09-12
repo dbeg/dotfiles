@@ -11,30 +11,32 @@
   {{- $gh_signing_key = "id_ed25519_github_dbeg_personal" -}}
 {{- end }}
 
-{{- $wsl := false -}}
+{{- $is_wsl := false -}}
 {{- if eq .chezmoi.os "linux" -}}
   {{- $kernel := output "uname" "-r" | lower -}}
   {{- if contains "microsoft" $kernel -}}
-    {{- $wsl = true -}}
+    {{- $is_wsl = true -}}
   {{- end -}}
 {{- end }}
 
-{{- $debian := false -}}
+{{- $is_debian := false -}}
 {{- if eq .chezmoi.os "linux" -}}
   {{- $os_id := get .chezmoi.osRelease "id" | lower -}}
   {{- $os_id_like := get .chezmoi.osRelease "idLike" | lower -}}
   {{- if or (contains "debian" $os_id) (contains "ubuntu" $os_id) (contains "debian" $os_id_like) (contains "ubuntu" $os_id_like) -}}
-    {{- $debian = true -}}
+    {{- $is_debian = true -}}
   {{- end -}}
 {{- end }}
 
-{{- $arch_family := false -}}
+{{- $is_arch := false -}}
 {{- if eq .chezmoi.os "linux" -}}
   {{- $os_id_like := get .chezmoi.osRelease "idLike" | lower -}}
   {{- if contains "arch" $os_id_like -}}
-    {{- $arch_family = true -}}
+    {{- $is_arch = true -}}
   {{- end -}}
 {{- end }}
+
+{{- $is_darwin := eq .chezmoi.os "darwin" -}}
 
 [data]
   work           = {{ $work }}
@@ -44,9 +46,10 @@
   bw_url         = {{ $bw_url | quote }}
   gh_username    = {{ $gh_username | quote }}
   gh_signing_key = {{ $gh_signing_key | quote }}
-  wsl            = {{ $wsl }}
-  debian         = {{ $debian }}
-  arch_family    = {{ $arch_family }}
+  is_wsl         = {{ $is_wsl }}
+  is_debian      = {{ $is_debian }}
+  is_arch        = {{ $is_arch }}
+  is_darwin      = {{ $is_darwin }}
 
 [diff]
   command = "code"

@@ -44,8 +44,8 @@ path=(
 )
 
 # 2. Source OS-specific fragments (gated by .chezmoiignore)
-{{ if eq .chezmoi.os "darwin" }}[[ -f "$HOME/.zshenv-darwin" ]] && source "$HOME/.zshenv-darwin"{{ end }}
-{{ if .wsl }}[[ -f "$HOME/.zshenv-wsl" ]] && source "$HOME/.zshenv-wsl"{{ end }}
+{{ if .is_darwin }}[[ -f "$HOME/.zshenv-darwin" ]] && source "$HOME/.zshenv-darwin"{{ end }}
+{{ if .is_wsl }}[[ -f "$HOME/.zshenv-wsl" ]] && source "$HOME/.zshenv-wsl"{{ end }}
 
 # 3. Eval mise shims to ensure we have tool access in non-interactive shells
 if command -v mise &>/dev/null; then
