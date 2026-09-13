@@ -47,8 +47,10 @@ path=(
 {{ if .is_darwin }}[[ -f "$HOME/.zshenv-darwin" ]] && source "$HOME/.zshenv-darwin"{{ end }}
 {{ if .is_wsl }}[[ -f "$HOME/.zshenv-wsl" ]] && source "$HOME/.zshenv-wsl"{{ end }}
 
-# 3. Eval mise shims to ensure we have tool access in non-interactive shells
-if command -v mise &>/dev/null; then
+# 3. Eval mise shims to ensure we have tool access in non-interactive shells.
+#    Skip when re-entering from an already-activated shell: re-activating can
+#    crash mise if socketpair is denied (transient seccomp ENOSYS).
+if [[ -z "${MISE_SHELL:-}" ]] && command -v mise &>/dev/null; then
     eval "$(mise activate zsh --shims)"
 fi
 
