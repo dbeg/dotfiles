@@ -17,6 +17,7 @@ $git_branch\
 $git_status\
 [](fg:green bg:blue)\
 $mise\
+$docker_context\
 $c\
 $elixir\
 $elm\
@@ -31,7 +32,6 @@ $bun\
 $nim\
 $rust\
 $scala\
-$docker_context\
 [](fg:blue)\
 $fill\
 [](fg:purple)\
@@ -153,10 +153,11 @@ style = "bg:blue fg:black"
 format = '[ $symbol ($version) ]($style)'
 
 [mise]
+symbol = "󰭼"
 style = "bg:blue fg:black"
-healthy_symbol = "good"
-unhealthy_symbol = "bad"
-format = '[ $symbol$health ]($style)'
+healthy_symbol = "yay"
+unhealthy_symbol = "nay"
+format = '[ $symbol ($health) ]($style)'
 disabled = false
 
 [nodejs]
