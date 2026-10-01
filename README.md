@@ -27,6 +27,8 @@ Note that [chezmoi external sources](https://www.chezmoi.io/user-guide/include-f
 chezmoi apply --refresh-externals # refresh externals manually during apply
 ```
 
+On a fresh work machine, run `chezmoi apply` twice. Templates render before externals are cloned, so the first apply clones `~/.work` and the second picks up its work-specific additions (for example, work signers in `~/.ssh/allowed_signers`).
+
 ## Overview
 
 | Area | Tools |

@@ -1,3 +1,9 @@
-{{ range gitHubKeys $.gh_username -}}
-{{ $.email }} {{ .Key }}
-{{ end -}}
+# Personal signers
+{{- $keys := output "curl" "-s" (printf "https://api.github.com/users/%s/ssh_signing_keys" .gh_username) | fromJson }}
+{{- range $keys }}
+# {{ .title | replaceAllRegex "\\s+" " " }}
+{{ $.email }} {{ .key }}
+{{- end }}
+
+{{- $work_signers := joinPath .chezmoi.homeDir ".work/git/allowed_signers" }}
+{{ if stat $work_signers }}{{ include $work_signers }}{{ end }}

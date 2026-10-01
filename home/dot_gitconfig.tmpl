@@ -1,12 +1,5 @@
-[user]
-    name  = {{ .name }}
-    email = {{ .email }}
-{{- $keysJson := output "curl" "-s" (printf "https://api.github.com/users/%s/ssh_signing_keys" .gh_username) -}}
-{{- range ($keysJson | fromJson) -}}
-  {{- if eq (trim .title) $.gh_signing_key }}
-    signingkey = {{ .key }}
-  {{- end }}
-{{- end }}
+[include]
+    path = ~/.config/git/personal.gitconfig
 
 [gpg]
 	format = ssh
@@ -107,3 +100,7 @@
 		bold yellow => syntax "#6a635d"
 	# Should match the name of the bat theme
 	syntax-theme = Catppuccin Macchiato
+
+# Work override (only applied if present)
+[include]
+    path = ~/.work/git/config
