@@ -3,7 +3,9 @@ inline_height = 20
 show_help = false
 show_numeric_shortcuts = false
 style = "full"
+{{- if not .work }}
 sync_address = "{{ .atuin_url }}"
+{{- end }}
 
 # ctrl + r -> history for current dir
 filter_mode = "directory"
@@ -11,7 +13,7 @@ filter_mode = "directory"
 filter_mode_shell_up_key_binding = "host"
 
 [ui]
-columns = ["duration", "datetime", "time", "user", "host", "directory", "command", "exit"]
+columns = ["duration", "exit", "datetime", "directory", "command"]
 
 [theme]
 name = "catppuccin-macchiato"
