@@ -8,6 +8,4 @@ if [[ -f "$work_bootstrap" ]]; then
   echo "--- Running $work_bootstrap ---"
   "$work_bootstrap"
   echo "--- Finished running $work_bootstrap ---"
-else
-  echo "--- No $work_bootstrap found, skipping ---"
 fi
