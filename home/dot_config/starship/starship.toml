@@ -66,9 +66,12 @@ disabled = false
 [hostname]
 style = "bg:red fg:black"
 format = "[@$hostname ]($style)"
-aliases = { "MacBook-Pro-DanBeghin" = "work" }
 ssh_only = false
 disabled = false
+
+[hostname.aliases]
+"MacBook-Pro-DanBeghin" = "work"
+"M-K2QXTL40CM" = "work"
 
 [directory]
 style = "bg:yellow fg:black"
