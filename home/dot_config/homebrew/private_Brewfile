@@ -50,8 +50,6 @@ brew "zsh-syntax-highlighting"
 cask "bruno"
 # Utility that prevents the system from going to sleep
 cask "caffeine"
-# Terminal-based AI coding assistant
-cask "claude-code"
 # Web browser
 cask "firefox"
 cask "font-fira-code-nerd-font"
