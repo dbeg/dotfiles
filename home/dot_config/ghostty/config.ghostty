@@ -1,6 +1,11 @@
+cursor-color = #8BD5CA
 cursor-style = block
 cursor-style-blink = true
 font-family = JetBrainsMono Nerd Font
 font-size = 18
-shell-integration-features = no-cursor
+selection-background = #8BD5CA
+selection-foreground = #24273A
+shell-integration-features = no-cursor, no-title
 theme = Catppuccin Macchiato
+notify-on-command-finish = unfocused
+notify-on-command-finish-after = 10s
