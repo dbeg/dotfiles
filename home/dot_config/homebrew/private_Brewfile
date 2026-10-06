@@ -24,8 +24,6 @@ brew "docker-compose"
 brew "git"
 # C library implementing the SSH2 protocol
 brew "libssh2"
-# Syntax-highlighting pager for git and diff output
-brew "git-delta"
 # Official GitLab CI runner
 brew "gitlab-runner"
 # GNU implementation of the famous stream editor
