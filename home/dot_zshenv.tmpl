@@ -17,12 +17,6 @@ if command -v code >/dev/null 2>&1; then
   export EDITOR="code --wait"
 fi
 
-{{ if eq .chezmoi.os "darwin" }}
-if [[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -v 1.8 &>/dev/null; then
-  export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
-fi
-{{- end }}
-
 {{ if .wsl -}}
 # Bitwarden SSH Agent Bridge for WSL2
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
