@@ -24,9 +24,9 @@ $elm\
 $golang\
 $gradle\
 $haskell\
+$maven\
 $java\
 $julia\
-$maven\
 $nodejs\
 $bun\
 $nim\
@@ -149,6 +149,7 @@ style = "bg:blue fg:black"
 format = '[ $symbol ($version) ]($style)'
 
 [maven]
+symbol = ""
 style = "bg:blue fg:black"
 format = '[ $symbol ($version) ]($style)'
 
