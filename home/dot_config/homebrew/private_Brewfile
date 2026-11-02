@@ -16,6 +16,8 @@ brew "pycparser"
 brew "cffi"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+# OpenCode agent harness
+brew "opencode"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Isolated development environments using Docker

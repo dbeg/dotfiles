@@ -7,8 +7,12 @@
     ],
     "default_agent": "plan",
     "agent": {
-        "plan": { "color": "success" },
-        "build": { "color": "error" }
+        "plan": {
+            "color": "#a6da95"
+        },
+        "build": {
+            "color": "#ed8796"
+        }
     },
     "autoupdate": false,
     "snapshot": false,
