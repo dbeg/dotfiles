@@ -36,6 +36,8 @@ brew "gnupg"
 brew "libyaml"
 # Command-line note taker
 brew "jrnl"
+# Quickly manage and navigate project directories for experiments
+brew "try"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # Perl-powered file rename script with many helpful built-ins
