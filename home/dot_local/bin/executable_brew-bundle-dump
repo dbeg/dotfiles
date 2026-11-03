@@ -37,7 +37,19 @@ main() {
 
     gum style --border normal --margin "1 0" --padding "0 1" "Dumping Homebrew Brewfile..."
 
-    if ! gum spin --title "Running brew bundle dump" -- brew bundle dump --file="$tmpfile" --force; then
+    if ! gum spin --title "Running brew bundle dump" --show-error -- \
+        brew bundle dump \
+            --file="$tmpfile" \
+            --no-mas \
+            --no-vscode \
+            --no-go \
+            --no-cargo \
+            --no-uv \
+            --no-flatpak \
+            --no-winget \
+            --no-npm \
+            --force; \
+    then
         rm -f "$tmpfile"
         gum style --border normal --margin "1 0" --padding "0 1" --foreground 196 "Failed to dump Brewfile"
         return 1

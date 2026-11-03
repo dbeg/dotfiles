@@ -16,16 +16,14 @@ brew "pycparser"
 brew "cffi"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
-# OpenCode agent harness
-brew "opencode"
+# C library implementing the SSH2 protocol
+brew "libssh2"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Isolated development environments using Docker
 brew "docker-compose"
 # Distributed revision control system
 brew "git"
-# C library implementing the SSH2 protocol
-brew "libssh2"
 # Official GitLab CI runner
 brew "gitlab-runner"
 # GNU implementation of the famous stream editor
@@ -36,14 +34,16 @@ brew "gnupg"
 brew "libyaml"
 # Command-line note taker
 brew "jrnl"
-# Quickly manage and navigate project directories for experiments
-brew "try"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# AI coding agent, built for the terminal
+brew "opencode"
 # Perl-powered file rename script with many helpful built-ins
 brew "rename"
 # Very fast implementation of tldr in Rust
 brew "tealdeer"
+# Quickly manage and navigate project directories for experiments
+brew "try"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
