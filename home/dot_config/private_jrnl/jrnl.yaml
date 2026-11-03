@@ -1,8 +1,8 @@
 colors:
   body: none
-  date: "#ed8796"
-  tags: "#a6da95"
-  title: "#eed49f"
+  date: red
+  tags: yellow
+  title: green
 default_hour: 9
 default_minute: 0
 editor: code --wait
@@ -16,4 +16,4 @@ linewrap: 79
 tagsymbols: '#@'
 template: false
 timeformat: '%F %r'
-version: v4.3
+version: '4.6'
