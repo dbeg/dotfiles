@@ -21,7 +21,15 @@ fi
 # Bitwarden SSH Agent Bridge for WSL2
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
 
-if [ ! -S "$SSH_AUTH_SOCK" ]; then
+socket_ok=0
+if [ -S "$SSH_AUTH_SOCK" ]; then
+    if command -v ss >/dev/null 2>&1; then
+        ss -lx 2>/dev/null | grep -qF "$SSH_AUTH_SOCK" && socket_ok=1
+    else
+        socket_ok=1
+    fi
+fi
+if [ "$socket_ok" -eq 0 ]; then
     rm -f "$SSH_AUTH_SOCK"
 
     # Cache location for the resolved binary path
@@ -49,7 +57,7 @@ if [ ! -S "$SSH_AUTH_SOCK" ]; then
 
     # 2. Spawn the background bridge
     if [ -n "$NPIPERELAY_PATH" ]; then
-        ( setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"${NPIPERELAY_PATH} -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
+        ( setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork EXEC:"${NPIPERELAY_PATH} -p -l -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
     fi
 fi
 {{- end }}
