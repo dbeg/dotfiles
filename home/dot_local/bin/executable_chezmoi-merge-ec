@@ -1,0 +1,236 @@
+#!/usr/bin/env bash
+# chezmoi merge.command wrapper: resolves destination-vs-target differences
+# in the `ec` TUI, writes the result back to the source file, then offers to
+# apply it. Run with --help for usage.
+#
+# chezmoi has no real common ancestor, so the base is the destination with
+# each differing region collapsed to one placeholder line. That makes ec see
+# both sides changing the placeholder, i.e. one conflict per differing region.
+set -euo pipefail
+
+# Catppuccin Macchiato
+text="#cad3f5" subtext="#a5adcb" overlay="#6e738d"
+blue="#8aadf4" mauve="#c6a0f6" green="#a6da95" yellow="#eed49f" red="#ed8796"
+
+usage() {
+	cat <<'EOF'
+Usage: chezmoi-merge-ec <destination> <source> <target>
+       chezmoi-merge-ec -h | --help
+
+Resolve differences between a file on disk and what chezmoi would write, one
+region at a time, in the `ec` terminal merge editor. The result is written to
+the chezmoi source file, then you are offered to apply it to disk.
+
+Arguments (the order chezmoi passes them):
+  destination   the file on disk (ours)
+  source        the file in the chezmoi source directory; receives the result
+  target        the rendered state chezmoi wants (theirs); must be identical
+                to <source>, so templates and encrypted files are refused
+
+Set as the chezmoi merge command (chezmoi.toml):
+  [merge]
+    command = "chezmoi-merge-ec"
+
+Run by hand:
+  chezmoi-merge-ec ~/.gitignore_global \
+    "$(chezmoi source-path ~/.gitignore_global)" \
+    "$(chezmoi source-path ~/.gitignore_global)"
+
+Keys in ec: n/p next/prev conflict, h/l select ours/theirs, a accept,
+o/t ours/theirs, O/T ours/theirs for all, w write, q quit.
+
+Requires: ec, git, diff. Optional: gum (styling and menus), bat (whitespace
+preview), delta (diff display), chezmoi (apply from the menu).
+
+Exit status: 0 success or nothing to do, 1 aborted or failed, 2 usage error.
+EOF
+}
+
+case "${1:-}" in
+-h | --help)
+	usage
+	exit 0
+	;;
+esac
+if [ $# -ne 3 ]; then
+	usage >&2
+	exit 2
+fi
+
+dest=$1
+source=$2
+target=$3
+
+have_gum=0
+command -v gum >/dev/null && have_gum=1
+have_tty=0
+{ : </dev/tty; } 2>/dev/null && have_tty=1
+
+export GUM_CHOOSE_CURSOR="❯ " GUM_CHOOSE_CURSOR_FOREGROUND="$blue" \
+	GUM_CHOOSE_HEADER_FOREGROUND="$mauve" GUM_CHOOSE_SELECTED_FOREGROUND="$blue" \
+	GUM_CHOOSE_ITEM_FOREGROUND="$text" GUM_CHOOSE_SHOW_HELP=false
+
+say() { # color text...
+	local color=$1
+	shift
+	if ((have_gum)); then gum style --foreground "$color" "$*"; else echo "$*"; fi
+}
+ok() { say "$green" "✓ $*"; }
+info() { say "$subtext" "$*"; }
+warn() { say "$yellow" "! $*"; }
+fail() { say "$red" "✗ $*" >&2; }
+
+banner() {
+	if ((have_gum)); then
+		gum style --border rounded --border-foreground "$mauve" --padding "0 2" \
+			--foreground "$text" "$(gum style --bold --foreground "$mauve" 'chezmoi merge')" "$dest"
+	else
+		echo "== chezmoi merge: $dest =="
+	fi
+}
+
+# choose <header> <option>...: prints the selected option
+choose() {
+	local header=$1 choice i=1
+	shift
+	if ((have_gum)); then
+		gum choose --header "$header" "$@"
+		return
+	fi
+	echo "$header" >/dev/tty
+	for choice in "$@"; do
+		echo "  $i) $choice" >/dev/tty
+		i=$((i + 1))
+	done
+	read -r -p "> " i </dev/tty
+	local opts=("$@")
+	echo "${opts[$((i - 1))]:-}"
+}
+
+show_diff() {
+	{ diff -u -L disk -L source "$dest" "$source" || true; } |
+		if command -v delta >/dev/null; then delta --paging=never; else cat; fi
+}
+
+hunks() { # [diff-flags] <a> <b>: number of hunks
+	{ diff "$@" || true; } | grep -c '^[0-9]' || true
+}
+
+banner
+
+if ! cmp -s "$source" "$target"; then
+	fail "$source is a template or otherwise transformed."
+	info "Edit the source by hand instead (chezmoi edit)."
+	exit 1
+fi
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+while true; do
+	if [ -e "$dest" ]; then cp "$dest" "$tmp/local"; else : >"$tmp/local"; fi
+
+	if cmp -s "$tmp/local" "$target"; then
+		ok "No differences to resolve."
+		exit 0
+	fi
+
+	# ec can't show whitespace, so preview the diff with visible whitespace
+	# when some hunks differ only by whitespace (they vanish under `diff -w`).
+	if [ "$(hunks "$tmp/local" "$target")" != "$(hunks -w "$tmp/local" "$target")" ] &&
+		command -v bat >/dev/null; then
+		{ diff -u -L destination -L chezmoi "$tmp/local" "$target" || true; } |
+			sed -E '3,${/^[-+]/{s/\t/→/g;s/ /·/g;};}' |
+			bat -l diff --theme "Catppuccin Macchiato" --style=plain --paging=never --color=always || true
+		warn "Whitespace differs (· space, → tab)."
+		if ((have_tty)); then
+			[ "$(choose "Open in ec?" "Open ec" "Abort")" = "Open ec" ] || {
+				info "Aborted; source left unchanged."
+				exit 1
+			}
+		fi
+	fi
+
+	{ diff "$tmp/local" "$target" || true; } | awk '
+		FNR == NR {
+			if ($0 ~ /^[0-9]/) {
+				n++
+				split($0, p, /[acd]/)
+				op = $0; gsub(/[0-9,]/, "", op)
+				split(p[1], o, ",")
+				start[n] = (op == "a") ? o[1] + 1 : o[1]
+				cnt[n] = (op == "a") ? 0 : (o[2] == "" ? 1 : o[2] - o[1] + 1)
+			}
+			next
+		}
+		{ lines[FNR] = $0; total = FNR }
+		END {
+			h = 1
+			for (i = 1; i <= total + 1; i++) {
+				if (h <= n && start[h] == i) {
+					print "<no common ancestor>"
+					i += cnt[h] - 1
+					h++
+				} else if (i <= total) print lines[i]
+			}
+		}
+	' - "$tmp/local" >"$tmp/base"
+
+	git merge-file -p --diff3 -L destination -L base -L chezmoi \
+		"$tmp/local" "$tmp/base" "$target" >"$tmp/merged" || [ $? -le 127 ]
+
+	ec "$tmp/base" "$tmp/local" "$target" "$tmp/merged"
+
+	if ! ec --check --merged "$tmp/merged"; then
+		warn "Unresolved conflicts remain; source left unchanged."
+		if ((have_tty)) && [ "$(choose "What now?" "Re-open ec" "Quit")" = "Re-open ec" ]; then
+			continue
+		fi
+		exit 1
+	fi
+
+	if cmp -s "$tmp/merged" "$source"; then
+		info "Source unchanged (result matches the existing source)."
+	else
+		changed=$(hunks "$source" "$tmp/merged")
+		cp "$tmp/merged" "$source"
+		ok "Source updated ($changed hunk(s) changed)."
+	fi
+
+	if cmp -s "$source" "$dest"; then
+		ok "Source now matches the file on disk."
+		exit 0
+	fi
+
+	warn "Disk still differs from source."
+	if ! ((have_tty)); then
+		info "Run 'chezmoi apply $dest' to write it."
+		exit 0
+	fi
+
+	again=0
+	while true; do
+		case "$(choose "Apply the source to disk?" \
+			"Apply (overwrite disk)" "Show diff" "Re-run merge" "Skip (leave disk as is)")" in
+		"Apply (overwrite disk)")
+			if chezmoi apply --force "$dest"; then
+				ok "Applied $dest."
+				exit 0
+			fi
+			fail "chezmoi apply failed."
+			exit 1
+			;;
+		"Show diff") show_diff ;;
+		"Re-run merge")
+			target=$source
+			again=1
+			break
+			;;
+		*)
+			info "Skipped; disk left as is. Run 'chezmoi apply $dest' later."
+			exit 0
+			;;
+		esac
+	done
+	((again)) || exit 0
+done
