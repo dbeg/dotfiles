@@ -2,7 +2,7 @@ git:
   diffRenderers:
     - colorArg: always
       command: delta --dark --paging=never
-gui: 
+gui:
   theme:
     activeBorderColor:
       - '#8bd5ca'
