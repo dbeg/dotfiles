@@ -54,11 +54,26 @@
 	logy = log --no-show-signature --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%G?|%an|%GS]%Creset' --abbrev-commit --date=relative
 
 [merge]
-    tool = vscode
+    tool = ec
 	conflictStyle = zdiff3
 
-[mergetool "vscode"]
-    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[mergetool]
+    prompt     = false
+    keepBackup = false
+
+[mergetool "ec"]
+    cmd           = ec \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+    trustExitCode = true
+
+[diff]
+    tool = delta
+
+[difftool]
+    prompt = false
+
+[difftool "delta"]
+    # delta shells out to `git diff --no-index`, which would recurse into difftool
+    cmd = env -u GIT_EXTERNAL_DIFF delta \"$LOCAL\" \"$REMOTE\"
 
 [interactive]
     diffFilter = delta --color-only
