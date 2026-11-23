@@ -32,9 +32,9 @@ Set as the chezmoi merge command (chezmoi.toml):
     command = "chezmoi-merge-ec"
 
 Run by hand:
-  chezmoi-merge-ec ~/.gitignore_global \
-    "$(chezmoi source-path ~/.gitignore_global)" \
-    "$(chezmoi source-path ~/.gitignore_global)"
+  chezmoi-merge-ec ~/.config/git/ignore \
+    "$(chezmoi source-path ~/.config/git/ignore)" \
+    "$(chezmoi source-path ~/.config/git/ignore)"
 
 Keys in ec: n/p next/prev conflict, h/l select ours/theirs, a accept,
 o/t ours/theirs, O/T ours/theirs for all, w write, q quit.

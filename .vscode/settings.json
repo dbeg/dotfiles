@@ -3,6 +3,7 @@
     "*_alias*": "shellscript",
     "*_funcs*": "shellscript",
     "*_gitconfig*": "gitconfig",
+    "**/dot_config/git/*config*": "gitconfig",
     "*_private*": "shellscript",
     "*_zlogin*": "shellscript",
     "*_zsh*": "shellscript",
