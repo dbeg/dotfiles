@@ -3,6 +3,11 @@
 
 [gpg]
 	format = ssh
+{{- if ne .chezmoi.os "windows" }}
+
+[gpg "openpgp"]
+	program = {{ .chezmoi.homeDir }}/.local/bin/gpg-xdg
+{{- end }}
 
 [gpg "ssh"]
 	allowedSignersFile = ~/.ssh/allowed_signers

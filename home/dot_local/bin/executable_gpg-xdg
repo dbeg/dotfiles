@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# gpg wrapper for git's gpg.openpgp.program.
+#
+# GUI-launched apps (IDEs, the Codex app, ...) don't inherit GNUPGHOME from
+# ~/.zshenv, so a bare `gpg` recreates ~/.gnupg whenever git verifies a
+# GPG-signed commit (log.showSignature = true, e.g. GitHub web-flow merges).
+# Default GNUPGHOME to the XDG location here, and don't rely on PATH, which
+# GUI apps often lack Homebrew in.
+export GNUPGHOME="${GNUPGHOME:-${XDG_DATA_HOME:-$HOME/.local/share}/gnupg}"
+
+for gpg in "$(command -v gpg 2>/dev/null)" /opt/homebrew/bin/gpg /usr/local/bin/gpg /usr/bin/gpg; do
+  [ -n "$gpg" ] && [ -x "$gpg" ] && exec "$gpg" "$@"
+done
+
+echo "gpg-xdg: gpg not found" >&2
+exit 127
