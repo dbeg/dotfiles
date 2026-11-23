@@ -24,8 +24,6 @@ brew "docker"
 brew "docker-compose"
 # Distributed revision control system
 brew "git"
-# Official GitLab CI runner
-brew "gitlab-runner"
 # GNU implementation of the famous stream editor
 brew "gnu-sed"
 # GNU Privacy Guard (OpenPGP)
