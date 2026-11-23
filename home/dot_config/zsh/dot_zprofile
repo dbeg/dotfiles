@@ -1,5 +1,5 @@
 # /etc/zprofile runs path_helper, which moves /usr/bin ahead of Homebrew in
 # login shells. Rebuild PATH (and the work additions) after it.
-source "$XDG_CONFIG_HOME/zsh/path.zsh"
+source "$ZDOTDIR/includes/path.zsh"
 
 [[ -f "$HOME/.work/env.sh" ]] && source "$HOME/.work/env.sh"

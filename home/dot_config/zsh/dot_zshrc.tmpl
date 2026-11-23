@@ -1,7 +1,8 @@
 # ==========================================
 # 1. HISTORY CONFIGURATION
 # ==========================================
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="$XDG_STATE_HOME/zsh/history"
+[[ -d "${HISTFILE:h}" ]] || mkdir -p "${HISTFILE:h}"
 HISTSIZE=10000
 SAVEHIST=10000
 setopt APPEND_HISTORY       # Append to history file instead of overwriting
@@ -39,7 +40,9 @@ export FZF_DEFAULT_OPTS=" \
 export BAT_THEME="base16"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-autoload -Uz compinit && compinit
+[[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Colorize completion items
 zstyle ':completion:*' menu select                      # Allow arrow keys in Tab menu
 
@@ -73,9 +76,8 @@ fi
 # ==========================================
 # 6. EXTERNAL DOTFILES & DOTENV
 # ==========================================
-[[ -f "$HOME/.private" ]] && source "$HOME/.private"
-[[ -f "$HOME/.alias" ]] && source "$HOME/.alias"
-[[ -f "$HOME/.funcs" ]] && source "$HOME/.funcs"
+[[ -f "$ZDOTDIR/includes/alias.zsh" ]] && source "$ZDOTDIR/includes/alias.zsh"
+[[ -f "$ZDOTDIR/includes/funcs.zsh" ]] && source "$ZDOTDIR/includes/funcs.zsh"
 
 # ==========================================
 # 7. ZSH PLUGINS & CONTROLS

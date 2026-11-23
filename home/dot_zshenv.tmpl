@@ -6,6 +6,11 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_BIN_HOME="$HOME/.local/bin"
 
+# ~/.zshenv is the only zsh file that must live in $HOME, everything else is read from here.
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# Stop macOS's /etc/zshrc_Apple_Terminal from creating ~/.zsh_sessions
+export SHELL_SESSIONS_DISABLE=1
+
 export DOT_SRC_HOME="$HOME/src"
 export DOT_SRC_CODEBERG="$DOT_SRC_HOME/codeberg.org"
 export DOT_SRC_GITHUB="$DOT_SRC_HOME/github.com"
@@ -64,6 +69,11 @@ fi
 
 export YARN_ENABLE_SCRIPTS=false
 export NPM_CONFIG_IGNORE_SCRIPTS=true
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_LOGS_DIR="$XDG_STATE_HOME/npm/logs"
+
+export TUF_ROOT="$XDG_CACHE_HOME/sigstore"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
 export BITWARDENCLI_APPDATA_DIR="$XDG_CONFIG_HOME/bw"
 export TEALDEER_CONFIG_DIR="$XDG_CONFIG_HOME/tealdeer"
@@ -76,7 +86,7 @@ export GOPATH="$XDG_STATE_HOME/go"
 
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 
-source "$XDG_CONFIG_HOME/zsh/path.zsh"
+source "$ZDOTDIR/includes/path.zsh"
 
 # Work config (sets env vars, sources secrets.env)
 [[ -f "$HOME/.work/env.sh" ]] && source "$HOME/.work/env.sh"

@@ -7,6 +7,7 @@
     "*_private*": "shellscript",
     "*_zlogin*": "shellscript",
     "*_zsh*": "shellscript",
+    "**/dot_config/zsh/**/*.zsh*": "shellscript",
     "*executable*": "shellscript",
     "*toml*": "toml",
   }

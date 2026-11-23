@@ -1,4 +1,4 @@
-# Sourced from ~/.zshenv and ~/.zprofile (see .zprofile for why twice).
+# Sourced from ~/.zshenv and $ZDOTDIR/.zprofile (see .zprofile for why twice).
 # Must be idempotent; requires XDG_BIN_HOME.
 
 # 1. Establish absolute baseline system paths
